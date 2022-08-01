@@ -32,13 +32,13 @@ variable "zone" {
   default     = "us-central1-a"
 }
 
-variable "machine_type" {
-  description = "The machine type for compute engine."
-  default     = "n1-standard-1"
+variable "bentoctl_firewall" {
+  description = "The firewall aplied to the compute engine."
+  default     = "bentoctl-firewall"
 }
 
-variable "storage_account_id" {
-  description = "The storage account id."
+variable "service_account_id" {
+  description = "The service account id."
   default     = "ai-engine-terraform-service-account"
 }
 
@@ -71,7 +71,7 @@ module "gce-container" {
 }
 
 resource "google_service_account" "created_service_account" {
-  account_id   = var.storage_account_id
+  account_id   = var.service_account_id
   display_name = "AI Engine Terraform Service Account"
 }
 
@@ -130,7 +130,7 @@ resource "google_compute_instance" "vm" {
 }
 
 resource "google_compute_firewall" "default" {
-  name    = "bentoml-firewall"
+  name    = var.bentoctl_firewall
   network = "default"
   project = var.project_id
 

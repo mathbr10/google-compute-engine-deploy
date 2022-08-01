@@ -13,6 +13,16 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "n1-standard-1",
     },
+    "firewall": {
+        "required": True,
+        "type": "string",
+        "default": "bentoctl-firewall",
+    },
+    "service_user_id": {
+        "required": True,
+        "type": "string",
+        "default": "ai-engine-terraform-service-account",
+    },
 }
 
 OPERATOR_NAME = "google-compute-engine"
