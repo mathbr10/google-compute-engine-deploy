@@ -37,6 +37,12 @@ variable "machine_type" {
   default     = "n1-standard-1"
 }
 
+variable "storage_account_id" {
+  description = "The storage account id."
+  default     = "ai-engine-terraform-service-account"
+}
+
+
 ################################################################################
 # Resources
 ################################################################################
@@ -62,6 +68,11 @@ module "gce-container" {
   }
 
   restart_policy = "Always"
+}
+
+resource "google_service_account" "created_service_account" {
+  account_id   = var.storage_account_id
+  display_name = "AI Engine Terraform Service Account"
 }
 
 resource "google_compute_instance" "vm" {
@@ -93,7 +104,7 @@ resource "google_compute_instance" "vm" {
   }
 
   service_account {
-    email = "558210432501-compute@developer.gserviceaccount.com"
+    email = google_service_account.created_service_account.email
     scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
@@ -129,6 +140,7 @@ resource "google_compute_firewall" "default" {
   }
 
   source_ranges = ["0.0.0.0/0"]
+  source_tags = ["http"]
 }
 
 ################################################################################
