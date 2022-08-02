@@ -18,10 +18,10 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "bentoctl-firewall",
     },
-    "service_user_id": {
+    "service_account_id": {
         "required": True,
         "type": "string",
-        "default": "ai-engine-terraform-service-account",
+        "default": "ai-engine-tf-sa",
     },
 }
 

@@ -32,14 +32,14 @@ variable "zone" {
   default     = "us-central1-a"
 }
 
-variable "bentoctl_firewall" {
+variable "firewall" {
   description = "The firewall aplied to the compute engine."
   default     = "bentoctl-firewall"
 }
 
 variable "service_account_id" {
   description = "The service account id."
-  default     = "ai-engine-terraform-service-account"
+  default     = "ai-engine-tf-sa"
 }
 
 
@@ -130,7 +130,7 @@ resource "google_compute_instance" "vm" {
 }
 
 resource "google_compute_firewall" "default" {
-  name    = var.bentoctl_firewall
+  name    = var.firewall
   network = "default"
   project = var.project_id
 
