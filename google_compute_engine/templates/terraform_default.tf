@@ -77,7 +77,7 @@ module "gce-container" {
 
 
 ##################
-Creating a service account for this deploy - Not working - Can not serve
+#Creating a service account for this deploy - Not working - Can not serve
 ##################
 
 #provider "google" {
@@ -104,7 +104,7 @@ Creating a service account for this deploy - Not working - Can not serve
 #}
 
 ##################
-Creating a service account for this deploy as IAM member - Not working - Can not serve
+#Creating a service account for this deploy as IAM member - Not working - Can not serve
 ##################
 
 #provider "google" {
