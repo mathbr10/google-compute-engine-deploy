@@ -23,6 +23,12 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "ai-engine-tf-sa",
     },
+
+    "default_service_account_eamil": {
+        "required": True,
+        "type": "string",
+        "default": "607243883309-compute@developer.gserviceaccount.com",
+    },
 }
 
 OPERATOR_NAME = "google-compute-engine"
