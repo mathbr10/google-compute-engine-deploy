@@ -24,7 +24,7 @@ OPERATOR_SCHEMA = {
         "default": "ai-engine-tf-sa",
     },
 
-    "default_service_account_eamil": {
+    "default_service_account_email": {
         "required": True,
         "type": "string",
         "default": "607243883309-compute@developer.gserviceaccount.com",
