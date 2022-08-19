@@ -27,8 +27,13 @@ variable "project_id" {
   type        = string
 }
 
+variable "machine_type" {
+  description = "GCP machine type."
+  default     = "n1-standard-1"
+}
+
 variable "zone" {
-  description = "GCP project to use for creating deployment."
+  description = "GCP zone."
   default     = "us-central1-a"
 }
 
