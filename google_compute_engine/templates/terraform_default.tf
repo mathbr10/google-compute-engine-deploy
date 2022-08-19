@@ -140,7 +140,7 @@ module "gce-container" {
 resource "google_compute_instance" "vm" {
   project                   = var.project_id
   name                      = "${var.deployment_name}-instance"
-  machine_type              = "var.machine_type
+  machine_type              = var.machine_type
   zone                      = var.zone
   allow_stopping_for_update = true
 
