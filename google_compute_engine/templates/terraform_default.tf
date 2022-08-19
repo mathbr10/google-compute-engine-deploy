@@ -37,10 +37,10 @@ variable "firewall" {
   default     = "bentoctl-firewall"
 }
 
-variable "service_account_id" {
-  description = "The service account id."
-  default     = "ai-engine-tf-sa"
-}
+#variable "service_account_id" {
+#  description = "The service account id."
+#  default     = "ai-engine-tf-sa"
+#}
 
 variable "default_service_account_email" {
   description = "Email from default service account"
@@ -140,8 +140,8 @@ module "gce-container" {
 resource "google_compute_instance" "vm" {
   project                   = var.project_id
   name                      = "${var.deployment_name}-instance"
-  machine_type              = "n1-standard-1"
-  zone                      = "us-central1-a"
+  machine_type              = "var.machine_type
+  zone                      = var.zone
   allow_stopping_for_update = true
 
   boot_disk {

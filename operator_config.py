@@ -18,11 +18,11 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "bentoctl-firewall",
     },
-    "service_account_id": {
-        "required": True,
-        "type": "string",
-        "default": "ai-engine-tf-sa",
-    },
+    # "service_account_id": {
+    #     "required": True,
+    #     "type": "string",
+    #     "default": "ai-engine-tf-sa",
+    # },
 
     "default_service_account_email": {
         "required": True,
