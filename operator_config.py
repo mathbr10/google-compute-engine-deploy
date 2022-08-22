@@ -38,8 +38,8 @@ OPERATOR_SCHEMA = {
 
     "gpu_units": {
         "required": True,
-        "type": "integer",
-        "default": 0,
+        "type": "string",
+        "default": "0",
     },
 }
 
