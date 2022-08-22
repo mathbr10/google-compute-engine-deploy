@@ -52,6 +52,15 @@ variable "default_service_account_email" {
   default     = "607243883309-compute@developer.gserviceaccount.com"
 }
 
+variable "gpu_type" {
+  description = "GPU type"
+  default     = "nvidia-tesla-k80" 
+}
+
+variable "gpu_units" {
+  description = "Number of GPUs"
+  default     = 0
+}
 
 ################################################################################
 # Resources
@@ -169,6 +178,15 @@ resource "google_compute_instance" "vm" {
   labels = {
     container-vm = module.gce-container.vm_container_label
   }
+
+  guest_accelerator{
+    type = var.gpu_type // Type of GPU attahced
+    count = var.gpu_units // Num of GPU attached
+  }
+  scheduling{
+    on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
+  }
+  # metadata_startup_script = "${file("start-up-script.sh")}"
 
   #service_account {
   #  email = google_service_account.created_service_account.email

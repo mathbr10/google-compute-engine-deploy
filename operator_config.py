@@ -29,6 +29,18 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "607243883309-compute@developer.gserviceaccount.com",
     },
+
+    "gpu_type": {
+        "required": True,
+        "type": "string",
+        "default": "nvidia-tesla-k80",
+    },
+
+    "gpu_units": {
+        "required": True,
+        "type": "integer",
+        "default": 0,
+    },
 }
 
 OPERATOR_NAME = "google-compute-engine"
