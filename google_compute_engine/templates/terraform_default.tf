@@ -59,7 +59,7 @@ variable "gpu_type" {
 
 variable "gpu_units" {
   description = "Number of GPUs"
-  default     = 0
+  default     = "0"
 }
 
 ################################################################################
