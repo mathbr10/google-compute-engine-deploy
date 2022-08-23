@@ -188,7 +188,7 @@ resource "google_compute_instance" "vm" {
     on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
   }
   
-  # metadata_startup_script = "${file("start-up-script.sh ${data.google_container_registry_image.bento_service.image_url} ${var.image_version}")}"
+ metadata_startup_script = "${file("start-up-script.sh ${data.google_container_registry_image.bento_service.image_url} ${var.image_version}")}"
 
   #service_account {
   #  email = google_service_account.created_service_account.email
