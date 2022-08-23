@@ -158,10 +158,10 @@ resource "google_compute_instance" "vm" {
   zone                      = var.zone
   allow_stopping_for_update = true
 
-  # module.gce-container.source_image
+  # "tf-2-8-cu113-v20220806-ubuntu-2004"
   boot_disk {
     initialize_params {
-      image = tf-2-8-cu113-v20220806-ubuntu-2004
+      image = module.gce-container.source_image
     }
   }
 
@@ -170,15 +170,15 @@ resource "google_compute_instance" "vm" {
     access_config {}
   }
 
-#  metadata = {
-#    gce-container-declaration = module.gce-container.metadata_value
-#    google-logging-enabled    = "true"
-#    google-monitoring-enabled = "true"
-#  }
+  metadata = {
+    gce-container-declaration = module.gce-container.metadata_value
+    google-logging-enabled    = "true"
+    google-monitoring-enabled = "true"
+  }
 
-#  labels = {
-#    container-vm = module.gce-container.vm_container_label
-#  }
+  labels = {
+   container-vm = module.gce-container.vm_container_label
+  }
 
   guest_accelerator{
     type = var.gpu_type // Type of GPU attahced
@@ -188,7 +188,7 @@ resource "google_compute_instance" "vm" {
     on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
   }
   
-  metadata_startup_script = "${file("start-up-script.sh ${data.google_container_registry_image.bento_service.image_url} ${var.image_version}")}"
+  # metadata_startup_script = "${file("start-up-script.sh ${data.google_container_registry_image.bento_service.image_url} ${var.image_version}")}"
 
   #service_account {
   #  email = google_service_account.created_service_account.email
