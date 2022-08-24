@@ -197,7 +197,7 @@ resource "google_compute_instance" "vm" {
     on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
   }
   
-  metadata_startup_script = "${file("start-up-script.sh")}"
+  # metadata_startup_script = "${file("start-up-script.sh")}"
 
   #service_account {
   #  email = google_service_account.created_service_account.email
