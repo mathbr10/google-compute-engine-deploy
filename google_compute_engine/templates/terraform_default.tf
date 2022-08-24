@@ -151,6 +151,15 @@ module "gce-container" {
 #  member             = "serviceAccount:${google_service_account.created_service_account.email}"
 #}
 
+
+data "template_file" "default" {
+  template = "${file("start-up-script.sh")}"
+  vars = {
+    image_name = "${data.google_container_registry_image.bento_service.image_url}"
+    image_tag = "${var.image_version}"
+  }
+}
+
 resource "google_compute_instance" "vm" {
   project                   = var.project_id
   name                      = "${var.deployment_name}-instance"
@@ -188,8 +197,8 @@ resource "google_compute_instance" "vm" {
     on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
   }
   
-  metadata_startup_script = "${file("start-up-script.sh ${data.google_container_registry_image.bento_service.image_url} ${var.image_version}")}"
-
+  metadata_startup_script = "${data.template_file.default.rendered}"
+  
   #service_account {
   #  email = google_service_account.created_service_account.email
   #  scopes = [
