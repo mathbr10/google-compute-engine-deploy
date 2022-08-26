@@ -42,11 +42,6 @@ variable "firewall" {
   default     = "bentoctl-firewall"
 }
 
-#variable "service_account_id" {
-#  description = "The service account id."
-#  default     = "ai-engine-tf-sa"
-#}
-
 variable "default_service_account_email" {
   description = "Email from default service account"
   default     = "607243883309-compute@developer.gserviceaccount.com"
@@ -80,68 +75,6 @@ module "gce-container" {
   restart_policy = "Always"
 }
 
-
-##################
-#Creating a service account for this deploy - Not working - Can not serve
-##################
-
-#provider "google" {
-#  project     = var.project_id
-#  region      = "us-central1"
-#}
-
-#resource "google_service_account" "created_service_account" {
-#  account_id   = var.service_account_id
-#  display_name = "AI Engine Terraform Service Account"
-#}
-
-#resource "google_service_account_key" "mykey" {
-#  service_account_id = google_service_account.created_service_account.name
-#}
-
-#resource "google_service_account_iam_binding" "admin-account-iam" {
-#  service_account_id = google_service_account.created_service_account.name
-#  role               = "roles/editor"
-
-#  members = [
-#    join(":", ["serviceAccount", google_service_account.created_service_account.email])
-#  ]
-#}
-
-##################
-#Creating a service account for this deploy as IAM member - Not working - Can not serve
-##################
-
-#provider "google" {
-#  project     = var.project_id
-#  region      = "us-central1"
-#}
-
-#data "google_compute_default_service_account" "default" {
-#}
-
-#resource "google_service_account" "created_service_account" {
-#  account_id   = var.service_account_id
-#  display_name = "AI Engine Terraform Service Account"
-#}
-
-#resource "google_service_account_key" "mykey" {
-#  service_account_id = google_service_account.created_service_account.name
-#}
-
-#resource "google_service_account_iam_member" "admin-account-iam" {
-#  service_account_id = google_service_account.created_service_account.name
-#  role               = "roles/editor"
-#  member             = "serviceAccount:${google_service_account.created_service_account.email}"
-#}
-
-## Allow SA service account use the default GCE account
-#resource "google_service_account_iam_member" "gce-default-account-iam" {
-#  service_account_id = data.google_compute_default_service_account.default.name
-#  role               = "roles/editor"
-#  member             = "serviceAccount:${google_service_account.created_service_account.email}"
-#}
-
 resource "google_compute_instance" "vm" {
   project                   = var.project_id
   name                      = "${var.deployment_name}-instance"
@@ -169,13 +102,6 @@ resource "google_compute_instance" "vm" {
   labels = {
     container-vm = module.gce-container.vm_container_label
   }
-
-  #service_account {
-  #  email = google_service_account.created_service_account.email
-  #  scopes = [
-  #    "https://www.googleapis.com/auth/cloud-platform",
-  #  ]
-  #}
 
   service_account {
     email = var.default_service_account_email
