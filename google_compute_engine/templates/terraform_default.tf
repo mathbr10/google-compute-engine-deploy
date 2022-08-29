@@ -94,6 +94,7 @@ resource "google_compute_instance" "vm" {
   boot_disk {
     initialize_params {
       image = module.gce-container.source_image
+      size = 50 // Required when using GPU
     }
   }
 
