@@ -83,7 +83,7 @@ resource "google_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image = "tf-2-8-cu113-v20220806-ubuntu-2004"
+      image = "ubuntu-os-cloud/ubuntu-1804-lts"
       size = 50 // Required when using GPU
     }
   }
