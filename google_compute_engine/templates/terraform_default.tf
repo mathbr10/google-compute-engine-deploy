@@ -116,9 +116,9 @@ resource "google_compute_instance" "vm" {
     type = var.gpu_type // Type of GPU attahced
     count = var.gpu_units // Num of GPU attached
   }
-  scheduling{
-    on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
-  }
+  # scheduling{
+  #   on_host_maintenance = "TERMINATE" // Need to terminate GPU on maintenance
+  # }
 
   # metadata_startup_script = "${file("start-up-script.sh")}"
 
