@@ -67,21 +67,11 @@ data "google_container_registry_image" "bento_service" {
   project = var.project_id
 }
 
-module "gce-container" {
-  # https://registry.terraform.io/modules/terraform-google-modules/container-vm/google/latest
-  source         = "terraform-google-modules/container-vm/google"
-  cos_image_name = "cos-97-16919-103-28" // "cos-stable-77-12371-89-0"
-  container = {
-    image = "${data.google_container_registry_image.bento_service.image_url}:${var.image_version}"
-    env = [
-      {
-        name  = "BENTOML_PORT"
-        value = "3000"
-      },
-    ]
+data "template_file" "startup_script" {
+  template = "${file("start-up-script.sh")}"
+  vars = {
+    IMAGE_TAG = var.image_tag
   }
-
-  restart_policy = "Always"
 }
 
 resource "google_compute_instance" "vm" {
@@ -93,7 +83,7 @@ resource "google_compute_instance" "vm" {
 
   boot_disk {
     initialize_params {
-      image = module.gce-container.source_image
+      image = "tf-2-8-cu113-v20220806-ubuntu-2004"
       size = 50 // Required when using GPU
     }
   }
@@ -101,16 +91,6 @@ resource "google_compute_instance" "vm" {
   network_interface {
     network = "default"
     access_config {}
-  }
-
-  metadata = {
-    gce-container-declaration = module.gce-container.metadata_value
-    google-logging-enabled    = "true"
-    google-monitoring-enabled = "true"
-  }
-
-  labels = {
-    container-vm = module.gce-container.vm_container_label
   }
 
   guest_accelerator{
@@ -122,6 +102,7 @@ resource "google_compute_instance" "vm" {
   }
 
   # metadata_startup_script = "${file("start-up-script.sh")}"
+  metadata_startup_script = "${data.template_file.startup_script.rendered}"
 
   service_account {
     email = var.default_service_account_email
