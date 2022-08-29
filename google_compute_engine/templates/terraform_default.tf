@@ -70,7 +70,7 @@ data "google_container_registry_image" "bento_service" {
 module "gce-container" {
   # https://registry.terraform.io/modules/terraform-google-modules/container-vm/google/latest
   source         = "terraform-google-modules/container-vm/google"
-  cos_image_name = "cos-stable-77-12371-89-0"
+  cos_image_name = "cos-97-16919-103-28" // "cos-stable-77-12371-89-0"
   container = {
     image = "${data.google_container_registry_image.bento_service.image_url}:${var.image_version}"
     env = [
