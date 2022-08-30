@@ -64,12 +64,13 @@ systemctl restart docker
 curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v${VERSION}/docker-credential-gcr_${OS}_${ARCH}-${VERSION}.tar.gz" \
 | tar xz docker-credential-gcr \
 && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
+docker-credential-gcr configure-docker
 
-# # docker-credential-gcr configure-docker
-# curl -fsSL "https://github.com/GoogleCloudPlatform/docker-credential-gcr/releases/download/v2.1.5/docker-credential-gcr_linux_amd64-2.1.5.tar.gz" \
-# | tar xz docker-credential-gcr \
-# && chmod +x docker-credential-gcr && sudo mv docker-credential-gcr /usr/bin/
-# docker-credential-gcr configure-docker
-
+# Pulling and running image in bentoml expected format
 docker pull ${IMAGE_TAG}
-docker run -e BENTOML_PORT=3000 -p 3000:3000 --gpus all --restart always ${IMAGE_TAG}
+if [[ $GPU_UNITS -gt 0 ]]
+then
+  docker run -e BENTOML_PORT=3000 -p 3000:3000 --gpus all --restart always ${IMAGE_TAG}
+else
+  docker run -e BENTOML_PORT=3000 -p 3000:3000 --restart always ${IMAGE_TAG}
+fi

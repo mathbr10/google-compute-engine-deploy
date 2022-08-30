@@ -71,6 +71,7 @@ data "template_file" "startup_script" {
   template = "${file("start-up-script.sh")}"
   vars = {
     IMAGE_TAG = var.image_tag
+    GPU_UNITS = var.gpu_units
     VERSION = "2.1.5"
     OS = "linux"
     ARCH = "amd64"
