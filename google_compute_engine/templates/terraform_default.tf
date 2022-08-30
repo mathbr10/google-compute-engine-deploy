@@ -71,6 +71,9 @@ data "template_file" "startup_script" {
   template = "${file("start-up-script.sh")}"
   vars = {
     IMAGE_TAG = var.image_tag
+    VERSION = "2.1.5"
+    OS = "linux"
+    ARCH = "amd64"
   }
 }
 
@@ -114,7 +117,7 @@ resource "google_compute_instance" "vm" {
   provisioner "local-exec" {
     command = <<-EOT
         attempt_counter=0
-        max_attempts=20
+        max_attempts=40
         printf 'waiting for server to start'
         until $(curl --output /dev/null --silent --head --fail http://${self.network_interface.0.access_config.0.nat_ip}:3000); do
             if [ $attempt_counter -eq $max_attempts ];then
