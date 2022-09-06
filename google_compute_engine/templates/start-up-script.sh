@@ -68,9 +68,10 @@ docker-credential-gcr configure-docker
 
 # Pulling and running image in bentoml expected format
 docker pull ${IMAGE_TAG}
-if [[ $GPU_UNITS -gt 0 ]]
+if [ ${GPU_UNITS} -gt 0 ]
 then
   docker run -e BENTOML_PORT=3000 -p 3000:3000 --gpus all --restart always ${IMAGE_TAG}
 else
   docker run -e BENTOML_PORT=3000 -p 3000:3000 --restart always ${IMAGE_TAG}
 fi
+
