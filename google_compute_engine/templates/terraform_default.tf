@@ -1,3 +1,18 @@
+# main.tf
+
+terraform {
+  required_version = ">= 0.14"
+
+  required_providers {
+    # Cloud Run support was added on 3.3.0
+    google = ">= 3.3"
+  }
+}
+
+provider "google" {
+  project = var.project_id
+}
+
 ################################################################################
 # Input variable definitions
 ################################################################################
@@ -42,11 +57,6 @@ variable "firewall" {
   default     = "bentoctl-firewall"
 }
 
-variable "default_service_account_email" {
-  description = "Email from default service account"
-  default     = "607243883309-compute@developer.gserviceaccount.com"
-}
-
 variable "gpu_type" {
   description = "GPU type"
   default     = "nvidia-tesla-k80" 
@@ -61,8 +71,8 @@ variable "gpu_units" {
 # Resources
 ################################################################################
 
-# data "google_compute_default_service_account" "default" {
-# }
+data "google_compute_default_service_account" "default" {
+}
 
 # Data source for container registry image
 data "google_container_registry_image" "bento_service" {
@@ -111,15 +121,8 @@ resource "google_compute_instance" "vm" {
   # metadata_startup_script = "${file("start-up-script.sh")}"
   metadata_startup_script = "${data.template_file.startup_script.rendered}"
 
-  # service_account {
-  #  email = data.google_compute_default_service_account.default.email
-  #  scopes = [
-  #    "https://www.googleapis.com/auth/cloud-platform",
-  #  ]
-  # }
-
   service_account {
-    email = var.default_service_account_email
+    email = data.google_compute_default_service_account.default.email
     scopes = [
       "https://www.googleapis.com/auth/cloud-platform",
     ]
