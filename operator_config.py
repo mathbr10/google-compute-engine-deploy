@@ -35,6 +35,16 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "0",
     },
+
+    "service_account_email": {
+        "required": True,
+        "type": "string",
+    },
+
+    "gcp_credentials_path": {
+        "required": True,
+        "type": "string",
+    },
 }
 
 OPERATOR_NAME = "google-compute-engine"
