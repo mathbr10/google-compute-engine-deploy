@@ -18,18 +18,11 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "bentoctl-firewall",
     },
-    
-    "default_service_account_email": {
-        "required": True,
-        "type": "string",
-        "default": "607243883309-compute@developer.gserviceaccount.com",
-    },
      "gpu_type": {
         "required": True,
         "type": "string",
         "default": "nvidia-tesla-k80",
     },
-
     "gpu_units": {
         "required": True,
         "type": "string",
