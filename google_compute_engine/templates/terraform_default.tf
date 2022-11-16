@@ -79,6 +79,11 @@ variable "gcp_credentials_path" {
   description = "Google Cloud service account credentials"
 }
 
+variable "gcp_disk_size" {
+  description = "Machine disk size"
+  default     = 50
+}
+
 ################################################################################
 # Resources
 ################################################################################
@@ -117,7 +122,7 @@ resource "google_compute_instance" "vm" {
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-1804-lts"
-      size = 50 // Required when using GPU
+      size = var.gcp_disk_size // Required when using GPU
     }
   }
 

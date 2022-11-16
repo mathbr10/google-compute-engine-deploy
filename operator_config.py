@@ -18,7 +18,7 @@ OPERATOR_SCHEMA = {
         "type": "string",
         "default": "bentoctl-firewall",
     },
-     "gpu_type": {
+    "gpu_type": {
         "required": True,
         "type": "string",
         "default": "nvidia-tesla-k80",
@@ -33,11 +33,14 @@ OPERATOR_SCHEMA = {
         "required": True,
         "type": "string",
     },
-
     "gcp_credentials_path": {
         "required": True,
         "type": "string",
     },
+    "gcp_disk_size": {
+        "required": True,
+        "type": "integer",
+    }
 }
 
 OPERATOR_NAME = "google-compute-engine"
